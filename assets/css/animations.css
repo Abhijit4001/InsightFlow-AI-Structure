@@ -1,0 +1,80 @@
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  animation: riseIn 0.7s ease forwards;
+}
+
+.reveal:nth-child(2) { animation-delay: 0.08s; }
+.reveal:nth-child(3) { animation-delay: 0.12s; }
+.reveal:nth-child(4) { animation-delay: 0.16s; }
+.reveal:nth-child(5) { animation-delay: 0.2s; }
+
+.pulse-card {
+  animation: pulseGlow 3s ease-in-out infinite;
+}
+
+.float-card {
+  animation: floatUp 4.5s ease-in-out infinite;
+}
+
+.glow-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.glow-card::after {
+  content: "";
+  position: absolute;
+  inset: -30%;
+  background: radial-gradient(circle, rgba(110, 231, 249, 0.18), transparent 48%);
+  animation: spinGlow 8s linear infinite;
+}
+
+@keyframes riseIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 0 rgba(110, 231, 249, 0.12);
+  }
+  50% {
+    box-shadow: 0 18px 40px rgba(110, 231, 249, 0.18);
+  }
+}
+
+@keyframes floatUp {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes spinGlow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .pulse-card,
+  .float-card,
+  .glow-card::after {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}

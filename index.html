@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>InsightFlow AI</title>
+  <meta name="description" content="Modern AI-powered analytics dashboard for CSV and Excel uploads." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="./assets/css/themes.css" />
+  <link rel="stylesheet" href="./assets/css/components.css" />
+  <link rel="stylesheet" href="./assets/css/landing.css" />
+  <link rel="stylesheet" href="./assets/css/animations.css" />
+  <link rel="stylesheet" href="./assets/css/responsive.css" />
+</head>
+<body class="landing-body">
+  <a href="#main-content" class="skip-link">Skip to content</a>
+
+  <header class="topbar">
+    <div class="brand-wrap">
+      <div class="brand-mark" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <div>
+        <h1 class="brand-title">InsightFlow AI</h1>
+        <p class="brand-subtitle">Upload data. Get insights. Ask better questions.</p>
+      </div>
+    </div>
+
+    <button class="theme-toggle" data-theme-toggle aria-label="Switch theme">
+      <span class="theme-icon">◐</span>
+    </button>
+  </header>
+
+  <main id="main-content" class="landing-main">
+    <section class="hero-panel glass reveal">
+      <div class="hero-copy">
+        <p class="eyebrow">AI analytics workspace</p>
+        <h2>Turn raw files into a modern dashboard with instant insights.</h2>
+        <p class="hero-text">
+          Upload CSV or Excel files and explore KPIs, trends, category performance,
+          distribution patterns, anomaly hints, and AI-generated summaries powered by Groq.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#upload-section" class="btn btn-primary">Upload dataset</a>
+          <a href="./dashboard.html" class="btn btn-secondary">Open dashboard</a>
+        </div>
+
+        <div class="hero-stats">
+          <article class="stat-card">
+            <h3>CSV + Excel</h3>
+            <p>Supports .csv, .xlsx, and .xls uploads.</p>
+          </article>
+          <article class="stat-card">
+            <h3>AI insights</h3>
+            <p>Executive summary, risks, actions, and answers.</p>
+          </article>
+          <article class="stat-card">
+            <h3>Interactive charts</h3>
+            <p>Line, bar, doughnut, radar, and heat-ready views.</p>
+          </article>
+        </div>
+      </div>
+
+      <div class="hero-visual glass-soft">
+        <div class="visual-grid">
+          <div class="visual-card pulse-card">
+            <span class="visual-label">Trend</span>
+            <div class="sparkline">
+              <span></span><span></span><span></span><span></span><span></span><span></span>
+            </div>
+          </div>
+          <div class="visual-card float-card">
+            <span class="visual-label">Top segment</span>
+            <strong>Auto-detected</strong>
+            <p>Best performing category from your file.</p>
+          </div>
+          <div class="visual-card glow-card">
+            <span class="visual-label">Ask AI</span>
+            <p>“Which region is underperforming and why?”</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="upload-section" class="upload-section reveal">
+      <div class="section-heading">
+        <p class="eyebrow">Start here</p>
+        <h2>Upload a dataset and open the dashboard</h2>
+      </div>
+
+      <div class="upload-shell glass">
+        <label for="landing-file" class="upload-dropzone" id="landingDropzone">
+          <input
+            id="landing-file"
+            type="file"
+            accept=".csv,.xlsx,.xls"
+            hidden
+          />
+          <div class="upload-icon">↑</div>
+          <h3>Drop your file here</h3>
+          <p>Select a CSV or Excel file to begin analysis.</p>
+          <span class="upload-badge">CSV / XLSX / XLS</span>
+        </label>
+
+        <div class="upload-meta">
+          <div class="meta-row">
+            <span>Selected file</span>
+            <strong id="landingFileName">No file selected</strong>
+          </div>
+          <div class="meta-row">
+            <span>Status</span>
+            <strong id="landingStatus">Waiting for upload</strong>
+          </div>
+
+          <button class="btn btn-primary btn-block" id="landingContinueBtn" disabled>
+            Continue to dashboard
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="feature-strip">
+      <article class="feature-item glass reveal">
+        <h3>Auto profiling</h3>
+        <p>Detects likely date, metric, quantity, and category columns from your dataset.</p>
+      </article>
+      <article class="feature-item glass reveal">
+        <h3>Decision-ready cards</h3>
+        <p>Highlights top categories, period changes, summary metrics, and outlier clues.</p>
+      </article>
+      <article class="feature-item glass reveal">
+        <h3>AI question answering</h3>
+        <p>Ask direct questions about trends, risk areas, and performance patterns.</p>
+      </article>
+    </section>
+  </main>
+
+  <script src="./assets/js/main.js"></script>
+</body>
+</html>

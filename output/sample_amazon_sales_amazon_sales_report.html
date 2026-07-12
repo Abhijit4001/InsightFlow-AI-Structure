@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon Sales Data Analysis Report</title>
+<style>
+body { margin: 0; padding: 0; min-height: 100vh; font-family: "Inter", sans-serif; background: radial-gradient(circle at top left, rgba(92, 114, 255, 0.28), transparent 28%), radial-gradient(circle at bottom right, rgba(255, 97, 136, 0.24), transparent 26%), linear-gradient(180deg, #0f172a 0%, #111827 100%); color: #e5e7eb; }
+.page-wrap { width: 100%; max-width: 1300px; margin: 0 auto; padding: 40px 24px 60px; }
+.glass-panel { background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.14); box-shadow: 0 20px 60px rgba(0,0,0,0.35); backdrop-filter: blur(18px); border-radius: 28px; }
+.page-header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 32px; }
+.page-header h1 { margin: 0; font-size: clamp(2.2rem, 2.5vw, 3.4rem); line-height: 1.05; }
+.badge { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 999px; background: rgba(255,255,255,0.12); color: #fff; font-size: 0.95rem; }
+.dashboard-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px; }
+.panel { grid-column: span 12; padding: 28px; }
+.panel-xl { grid-column: span 12; }
+.panel-lg { grid-column: span 12; }
+.metric-grid { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.metric-card { padding: 24px; border-radius: 24px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); }
+.metric-card h3 { margin: 0 0 10px; font-size: 0.95rem; letter-spacing: 0.03em; color: #c7d2fe; text-transform: uppercase; }
+.metric-card p { margin: 0; font-size: 2rem; font-weight: 700; color: #fff; }
+.chart-card { padding: 24px; border-radius: 28px; background: rgba(15, 23, 42, 0.88); border: 1px solid rgba(255,255,255,0.10); }
+.chart-card h2 { margin-top: 0; color: #e0f2fe; font-size: 1.15rem; }
+.chart-image { width: 100%; height: auto; border-radius: 20px; border: 1px solid rgba(255,255,255,0.10); box-shadow: 0 24px 56px rgba(0,0,0,0.18); }
+.table-card { padding: 24px; border-radius: 28px; background: rgba(15, 23, 42, 0.92); border: 1px solid rgba(255,255,255,0.10); }
+.table-card h2 { margin-top: 0; color: #dbeafe; }
+.report-table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+.report-table th, .report-table td { padding: 12px 14px; border-bottom: 1px solid rgba(226,232,240,0.12); color: #d1d5db; }
+.report-table th { text-align: left; color: #93c5fd; font-weight: 600; }
+.report-table tr:hover { background: rgba(255,255,255,0.04); }
+.section-title { margin: 0 0 18px; font-size: 1.25rem; color: #dbeafe; }
+@media (min-width: 900px) { .panel-lg { grid-column: span 8; } .panel-xl { grid-column: span 12; } .panel-half { grid-column: span 6; } }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+<div class="glass-panel page-header">
+<div>
+<h1>Amazon Sales Dashboard</h1>
+<p style="color: #cbd5e1; max-width: 700px; margin: 10px 0 0;">A glassmorphic dashboard for Amazon sales analytics with revenue, profit, fulfillment, and regional insights.</p>
+</div>
+<div class="badge">Source: sample_amazon_sales.csv</div>
+</div>
+<div class="dashboard-grid">
+<div class="panel panel-lg metric-grid">
+<div class="metric-card"><h3>Total Orders</h3><p>10</p></div>
+<div class="metric-card"><h3>Total Revenue</h3><p>$630.00</p></div>
+<div class="metric-card"><h3>Total Profit</h3><p>$116.00</p></div>
+<div class="metric-card"><h3>Average Order Value</h3><p>$63.00</p></div>
+<div class="metric-card"><h3>Avg Profit / Order</h3><p>$11.60</p></div>
+</div>
+<div class="panel panel-half chart-card">
+<h2 class="section-title">Monthly Revenue Trend</h2>
+<img src="monthly_revenue.png" alt="Monthly Revenue Trend" class="chart-image">
+</div>
+<div class="panel panel-half chart-card">
+<h2 class="section-title">Top Category Revenue</h2>
+<img src="category_revenue.png" alt="Top Category Revenue" class="chart-image">
+</div>
+<div class="panel panel-half chart-card">
+<h2 class="section-title">Sales Channel Performance</h2>
+<img src="channel_performance.png" alt="Sales Channel Performance" class="chart-image">
+</div>
+<div class="panel panel-half chart-card">
+<h2 class="section-title">Revenue by Region</h2>
+<img src="region_revenue.png" alt="Revenue by Region" class="chart-image">
+</div>
+<div class="panel panel-half chart-card">
+<h2 class="section-title">Order Status Distribution</h2>
+<img src="status_distribution.png" alt="Order Status Distribution" class="chart-image">
+</div>
+<div class="panel panel-half chart-card">
+<h2 class="section-title">Top Products</h2>
+<img src="top_products.png" alt="Top Products" class="chart-image">
+</div>
+<div class="panel panel-xl table-card">
+<h2 class="section-title">Executive Summary</h2>
+<ul style="margin: 0; padding-left: 20px; color: #cbd5e1;">
+<li style="margin-bottom: 10px;">Total revenue reached $630.00, generating $116.00 in profit.</li>
+<li style="margin-bottom: 10px;">The leading product category by revenue is Electronics.</li>
+<li style="margin-bottom: 10px;">Top performing region is South, while the highest revenue channel is Amazon.</li>
+<li style="margin-bottom: 10px;">The category with the strongest margin performance is Toys.</li>
+<li style="margin-bottom: 10px;">Average order value stands at $63.00, helping prioritize high-value customer segments.</li>
+<li style="margin-bottom: 10px;">Fulfillment mix and channel performance should be monitored to improve delivery efficiency and revenue share.</li>
+</ul>
+</div>
+<div class="panel panel-half table-card">
+<h2 class="section-title">Top Categories</h2>
+<table class="dataframe report-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>product_category</th>
+      <th>revenue</th>
+      <th>orders</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Electronics</td>
+      <td>235.0</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <td>Home</td>
+      <td>190.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td>Clothing</td>
+      <td>60.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>Toys</td>
+      <td>55.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>Books</td>
+      <td>50.0</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<div class="panel panel-half table-card">
+<h2 class="section-title">Top Regions</h2>
+<table class="dataframe report-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>region</th>
+      <th>revenue</th>
+      <th>orders</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>South</td>
+      <td>210.0</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <td>North</td>
+      <td>180.0</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <td>West</td>
+      <td>160.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td>East</td>
+      <td>80.0</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<div class="panel panel-half table-card">
+<h2 class="section-title">Fulfillment Summary</h2>
+<table class="dataframe report-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>fulfillment</th>
+      <th>orders</th>
+      <th>revenue</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>FBA</td>
+      <td>5</td>
+      <td>340.0</td>
+    </tr>
+    <tr>
+      <td>Merchant</td>
+      <td>5</td>
+      <td>290.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<div class="panel panel-half table-card">
+<h2 class="section-title">Sales Channel Summary</h2>
+<table class="dataframe report-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>sales_channel</th>
+      <th>revenue</th>
+      <th>profit</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Amazon</td>
+      <td>470.0</td>
+      <td>79.0</td>
+    </tr>
+    <tr>
+      <td>Website</td>
+      <td>160.0</td>
+      <td>37.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<div class="panel panel-half table-card">
+<h2 class="section-title">Order Status Distribution</h2>
+<table class="dataframe report-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>status</th>
+      <th>count</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Delivered</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <td>Shipped</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td>Cancelled</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>Returned</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+</body>
+</html>

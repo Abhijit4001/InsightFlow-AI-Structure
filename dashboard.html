@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>InsightFlow Dashboard</title>
+  <meta name="description" content="AI-powered interactive analytics dashboard." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="./assets/css/themes.css" />
+  <link rel="stylesheet" href="./assets/css/components.css" />
+  <link rel="stylesheet" href="./assets/css/dashboard.css" />
+  <link rel="stylesheet" href="./assets/css/animations.css" />
+  <link rel="stylesheet" href="./assets/css/responsive.css" />
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@latest/dist/chart.umd.min.js"></script>
+</head>
+<body class="dashboard-body">
+  <a href="#dashboard-main" class="skip-link">Skip to content</a>
+
+  <div class="dashboard-layout">
+    <aside class="sidebar glass">
+      <div class="sidebar-brand">
+        <div class="brand-mark" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <div>
+          <h1>InsightFlow</h1>
+          <p>AI Analytics Dashboard</p>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav" aria-label="Main navigation">
+        <a href="#overview" class="nav-link active">Overview</a>
+        <a href="#charts" class="nav-link">Charts</a>
+        <a href="#preview" class="nav-link">Data Preview</a>
+        <a href="#insights" class="nav-link">AI Insights</a>
+        <a href="#assistant" class="nav-link">Ask AI</a>
+      </nav>
+
+      <div class="sidebar-upload glass-soft">
+        <label class="mini-upload">
+          <input id="dashboard-file" type="file" accept=".csv,.xlsx,.xls" hidden />
+          <span>Upload new file</span>
+        </label>
+        <p id="sidebarFileText">No active dataset</p>
+      </div>
+
+      <div class="sidebar-footer">
+        <button class="theme-toggle" data-theme-toggle aria-label="Switch theme">
+          <span class="theme-icon">◐</span>
+        </button>
+        <a href="./index.html" class="btn btn-ghost btn-sm">Back</a>
+      </div>
+    </aside>
+
+    <div class="main-shell">
+      <header class="dashboard-header glass">
+        <div>
+          <p class="eyebrow">Workspace</p>
+          <h2>Data intelligence panel</h2>
+          <p class="header-description">
+            Analyze uploaded files, inspect patterns, and ask AI for contextual answers.
+          </p>
+        </div>
+
+        <div class="header-actions">
+          <button class="btn btn-secondary" id="analyzeBtn">Analyze file</button>
+          <button class="btn btn-primary" id="generateInsightsBtn">Generate AI insights</button>
+        </div>
+      </header>
+
+      <main id="dashboard-main" class="dashboard-main">
+        <section id="overview" class="panel-grid">
+          <article class="hero-summary glass reveal">
+            <div>
+              <p class="eyebrow">Dataset</p>
+              <h3 id="datasetName">No dataset loaded</h3>
+              <p id="datasetMeta">Upload a CSV or Excel file to begin analysis.</p>
+            </div>
+            <div class="hero-summary-badges">
+              <span class="badge" id="rowBadge">0 rows</span>
+              <span class="badge" id="colBadge">0 columns</span>
+              <span class="badge accent-badge" id="modelBadge">Groq ready</span>
+            </div>
+          </article>
+
+          <article class="kpi-card glass reveal">
+            <span class="kpi-label">Total records</span>
+            <h3 id="kpiRecords">—</h3>
+            <p>Rows detected in the uploaded dataset.</p>
+          </article>
+
+          <article class="kpi-card glass reveal">
+            <span class="kpi-label">Primary metric total</span>
+            <h3 id="kpiMetricTotal">—</h3>
+            <p>Auto-detected main numeric field summary.</p>
+          </article>
+
+          <article class="kpi-card glass reveal">
+            <span class="kpi-label">Average metric</span>
+            <h3 id="kpiMetricAvg">—</h3>
+            <p>Mean value of the main detected metric.</p>
+          </article>
+
+          <article class="kpi-card glass reveal">
+            <span class="kpi-label">Period change</span>
+            <h3 id="kpiPeriodChange">—</h3>
+            <p>Change from previous to latest detected period.</p>
+          </article>
+
+          <article class="kpi-card glass reveal">
+            <span class="kpi-label">Best category</span>
+            <h3 id="kpiBestCategory">—</h3>
+            <p>Top performing detected categorical group.</p>
+          </article>
+        </section>
+
+        <section id="charts" class="chart-grid">
+          <article class="chart-panel chart-panel-wide glass reveal">
+            <div class="panel-head">
+              <div>
+                <p class="eyebrow">Trend</p>
+                <h3>Time series performance</h3>
+              </div>
+            </div>
+            <canvas id="trendChart"></canvas>
+          </article>
+
+          <article class="chart-panel glass reveal">
+            <div class="panel-head">
+              <div>
+                <p class="eyebrow">Breakdown</p>
+                <h3>Category distribution</h3>
+              </div>
+            </div>
+            <canvas id="categoryChart"></canvas>
+          </article>
+
+          <article class="chart-panel glass reveal">
+            <div class="panel-head">
+              <div>
+                <p class="eyebrow">Distribution</p>
+                <h3>Status snapshot</h3>
+              </div>
+            </div>
+            <canvas id="statusChart"></canvas>
+          </article>
+
+          <article class="chart-panel glass reveal">
+            <div class="panel-head">
+              <div>
+                <p class="eyebrow">Signals</p>
+                <h3>Numeric comparison radar</h3>
+              </div>
+            </div>
+            <canvas id="radarChart"></canvas>
+          </article>
+        </section>
+
+        <section class="content-grid">
+          <article id="preview" class="data-panel glass reveal">
+            <div class="panel-head">
+              <div>
+                <p class="eyebrow">Preview</p>
+                <h3>Uploaded data sample</h3>
+              </div>
+              <span class="badge" id="columnCountBadge">0 columns</span>
+            </div>
+
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead id="previewHead"></thead>
+                <tbody id="previewBody">
+                  <tr>
+                    <td class="empty-cell">Upload and analyze a file to preview rows.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+
+          <article id="insights" class="insights-panel glass reveal">
+            <div class="panel-head">
+              <div>
+                <p class="eyebrow">Intelligence</p>
+                <h3>AI-generated insights</h3>
+              </div>
+              <span class="badge accent-badge" id="aiStateBadge">Not generated</span>
+            </div>
+
+            <div class="insight-summary glass-soft">
+              <h4>Executive summary</h4>
+              <p id="insightSummary">Run analysis, then generate AI insights to see a summary here.</p>
+            </div>
+
+            <div class="insight-columns">
+              <div class="insight-list-box">
+                <h4>Key insights</h4>
+                <ul id="insightList" class="insight-list">
+                  <li>No insights yet.</li>
+                </ul>
+              </div>
+
+              <div class="insight-list-box">
+                <h4>Risks</h4>
+                <ul id="riskList" class="insight-list">
+                  <li>No risks yet.</li>
+                </ul>
+              </div>
+
+              <div class="insight-list-box full-width">
+                <h4>Recommended actions</h4>
+                <ul id="actionList" class="insight-list">
+                  <li>No actions yet.</li>
+                </ul>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <section id="assistant" class="assistant-panel glass reveal">
+          <div class="panel-head">
+            <div>
+              <p class="eyebrow">Conversational analytics</p>
+              <h3>Ask AI about your dataset</h3>
+            </div>
+          </div>
+
+          <div class="assistant-layout">
+            <div class="assistant-prompts">
+              <button class="prompt-chip">What is the biggest trend in this dataset?</button>
+              <button class="prompt-chip">Which category performs best?</button>
+              <button class="prompt-chip">Are there any risks or anomalies?</button>
+              <button class="prompt-chip">What actions should I take next?</button>
+            </div>
+
+            <div class="assistant-box glass-soft">
+              <label for="questionInput" class="sr-only">Ask a question</label>
+              <textarea
+                id="questionInput"
+                rows="4"
+                placeholder="Ask about trends, outliers, category performance, or recommendations..."
+              ></textarea>
+
+              <div class="assistant-actions">
+                <button class="btn btn-primary" id="askAiBtn">Ask AI</button>
+              </div>
+
+              <div class="assistant-response" id="assistantResponse">
+                AI answers will appear here after analysis.
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script src="./assets/js/dashboard.js"></script>
+</body>
+</html>
